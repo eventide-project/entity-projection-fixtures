@@ -1,6 +1,6 @@
 require_relative 'interactive_init'
 
-context "Apply" do
+context "Fixture" do
   fixture(
     Projection,
     Controls::Projection::Example,

@@ -1,4 +1,4 @@
-require 'test_bench/fixture'
+require 'schema/fixtures'
 
 require 'entity_projection'
 

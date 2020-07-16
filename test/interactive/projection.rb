@@ -1,10 +1,13 @@
-require_relative 'automated_init'
+require_relative 'interactive_init'
 
-context "Entity Mutation" do
+context "Projection" do
   entity = Controls::Entity::New.example
   control_entity = Controls::Entity::New.example
 
   event = Controls::Event.example
+
+  detail "Event: #{event.pretty_inspect}"
+  detail "Control Entity: #{control_entity.pretty_inspect}"
 
   fixture = Projection.build(
     Controls::Projection::Example,
@@ -14,8 +17,6 @@ context "Entity Mutation" do
 
   fixture.()
 
-  detail "Event: #{event.pretty_inspect}"
-  detail "Control Entity: #{control_entity.pretty_inspect}"
   detail "Applied Entity: #{entity.pretty_inspect}"
 
   context "Entity is Mutated" do

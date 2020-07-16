@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.3.3'
 
   s.add_runtime_dependency 'evt-entity_projection'
-  s.add_runtime_dependency 'test_bench-fixture'
+  s.add_runtime_dependency 'evt-schema-fixtures'
 
   s.add_development_dependency 'test_bench'
 end

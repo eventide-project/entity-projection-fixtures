@@ -1,9 +1,11 @@
 require_relative 'automated_init'
 
-_context "Construction" do
+context "Apply Event" do
   fixture = Projection.build(
     Controls::Projection::Example,
     Controls::Entity.example,
     Controls::Event.example
   )
+
+  fixture.()
 end
