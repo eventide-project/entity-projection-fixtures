@@ -12,9 +12,10 @@ context "Fixture" do
       { :example_id => :id },
       :amount
     ])
+
+    fixture.assert_time_converted_and_copied(:time, :time)
   end
 end
 
 
 
-    # fixture.assert_time_converted_and_copied(:time, :time)
