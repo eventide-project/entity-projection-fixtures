@@ -1,7 +1,7 @@
-require 'entity_projection/controls'
+require 'message_store/controls'
 
-module EntityProjection
-  module Fixtures
-    Controls = EntityProjection::Controls
-  end
-end
+require 'entity_projection/fixtures/controls/id'
+require 'entity_projection/fixtures/controls/time'
+require 'entity_projection/fixtures/controls/event'
+require 'entity_projection/fixtures/controls/entity'
+require 'entity_projection/fixtures/controls/projection'
