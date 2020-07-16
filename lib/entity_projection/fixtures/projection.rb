@@ -25,19 +25,23 @@ module EntityProjection
 
           projection.(entity, event)
 
-          fixture(
-            Schema::Fixtures::Assignment,
-            entity
-          )
-
-          fixture(
-            Schema::Fixtures::Equality,
-            control_entity,
-            entity
-          )
 
         end
       end
+
+      def assert_attributes_copied(attribute_names, ignore_class: nil)
+        ignore_class ||= true
+
+        fixture(
+          Schema::Fixtures::Equality,
+          event,
+          entity,
+          attribute_names,
+          ignore_class: ignore_class
+        )
+      end
+
+
     end
   end
 end
