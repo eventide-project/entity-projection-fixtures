@@ -8,6 +8,7 @@ module EntityProjection
           some_entity.id = id
           some_entity.amount = amount
           some_entity.time = Time::Raw.example
+          some_entity.other_time = Time::Processed::Raw.example
 
           some_entity
         end
@@ -30,6 +31,7 @@ module EntityProjection
           attribute :id, String
           attribute :amount, Numeric, default: 0
           attribute :time, ::Time
+          attribute :other_time, ::Time
         end
 
         module New

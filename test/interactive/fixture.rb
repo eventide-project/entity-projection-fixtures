@@ -13,6 +13,7 @@ context "Fixture" do
       :amount
     ])
 
-    fixture.assert_time_converted_and_copied(:time, :time)
+    fixture.assert_time_converted_and_copied(:time)
+    fixture.assert_time_converted_and_copied(:some_time => :other_time)
   end
 end

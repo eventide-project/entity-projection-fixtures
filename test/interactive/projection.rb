@@ -31,6 +31,10 @@ context "Projection" do
     test "Time" do
       refute(entity.time == control_entity.time)
     end
+
+    test "Other Time" do
+      refute(entity.other_time == control_entity.other_time)
+    end
   end
 
   context "Event State is Applied to the Entity State" do
@@ -40,6 +44,14 @@ context "Projection" do
 
     test "Amount" do
       assert(entity.amount == event.amount)
+    end
+
+    test "Time" do
+      assert(entity.time == Time.parse(event.time))
+    end
+
+    test "Some Time => Other Time" do
+      assert(entity.other_time == Time.parse(event.some_time))
     end
   end
 end

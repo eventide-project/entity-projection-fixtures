@@ -20,8 +20,8 @@ module EntityProjection
 
         context "Apply #{event.message_type} to #{entity.class.type}" do
 
-          detail "Entity Class: #{entity.class.name}"
           detail "Event Class: #{event.class.name}"
+          detail "Entity Class: #{entity.class.name}"
 
           projection.(entity, event)
 
@@ -43,8 +43,14 @@ module EntityProjection
         )
       end
 
-      def assert_time_converted_and_copied(event_time_attribute, entity_time_attribute=nil)
-        entity_time_attribute ||= event_time_attribute
+      def assert_time_converted_and_copied(time_attribute_name)
+        if time_attribute_name.is_a?(Hash)
+          event_time_attribute = time_attribute_name.keys.first
+          entity_time_attribute = time_attribute_name.values.first
+        else
+          event_time_attribute = time_attribute_name
+          entity_time_attribute = time_attribute_name
+        end
 
         event_time = event.public_send(event_time_attribute)
         enity_time = entity.public_send(entity_time_attribute)
@@ -61,11 +67,11 @@ module EntityProjection
         end
       end
 
-      def self.printed_attribute_name(control_name, compare_name)
-        if control_name == compare_name
-          return control_name.to_s
+      def self.printed_attribute_name(event_time_attribute, entity_time_attribute)
+        if event_time_attribute == entity_time_attribute
+          return event_time_attribute.to_s
         else
-          return "#{control_name} => #{compare_name}"
+          return "#{event_time_attribute} => #{entity_time_attribute}"
         end
       end
     end
