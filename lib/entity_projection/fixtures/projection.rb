@@ -55,7 +55,7 @@ module EntityProjection
 
         context "Time converted and copied" do
           detail "Event Time: #{event_time}"
-          detail "Entity Time: #{enity_time.strftime('%Y-%m-%d %I:%M:%S.%L %Z')}"
+          detail "Entity Time: #{enity_time.strftime('%Y-%m-%d %H:%M:%S.%L %Z')}"
 
           printed_attribute_name = self.class.printed_attribute_name(event_time_attribute, entity_time_attribute)
 
