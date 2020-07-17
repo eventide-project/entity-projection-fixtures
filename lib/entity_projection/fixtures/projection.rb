@@ -41,26 +41,28 @@ module EntityProjection
         )
       end
 
-      def assert_time_converted_and_copied(time_attribute_name)
-        if time_attribute_name.is_a?(Hash)
-          event_time_attribute = time_attribute_name.keys.first
-          entity_time_attribute = time_attribute_name.values.first
+      def assert_transformed_and_copied(attribute_name, &transform)
+        if attribute_name.is_a?(Hash)
+          event_attribute_name = attribute_name.keys.first
+          entity_attribute_name = attribute_name.values.first
         else
-          event_time_attribute = time_attribute_name
-          entity_time_attribute = time_attribute_name
+          event_attribute_name = attribute_name
+          entity_attribute_name = attribute_name
         end
 
-        event_time = event.public_send(event_time_attribute)
-        enity_time = entity.public_send(entity_time_attribute)
+        event_attribute_value = event.public_send(event_attribute_name)
+        entity_attribute_value = entity.public_send(entity_attribute_name)
 
-        context "Time converted and copied" do
-          detail "Event Time: #{event_time}"
-          detail "Entity Time: #{enity_time.strftime('%Y-%m-%d %H:%M:%S.%L %Z')}"
+        context "Transformed and copied" do
+          detail "Event Value: #{event_attribute_value.inspect}"
+          detail "Entity Value: #{entity_attribute_value.inspect}"
 
-          printed_attribute_name = self.class.printed_attribute_name(event_time_attribute, entity_time_attribute)
+          printed_attribute_name = self.class.printed_attribute_name(event_attribute_name, entity_attribute_name)
+
+          transformed_event_value = transform.call(event_attribute_value)
 
           test printed_attribute_name do
-            assert(enity_time == Time.parse(event_time))
+            assert(transformed_event_value == entity_attribute_value)
           end
         end
       end
