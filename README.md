@@ -2,7 +2,7 @@
 
 [TestBench](http://test-bench.software/) fixtures for the [EntityProjection](https://github.com/eventide-project/entity-projection) library
 
-The EntityProjection Fixtures library provides [TestBench test fixtures](http://test-bench.software/user-guide/fixtures.html) for working with objects that are implementations of `EntityProjection`.
+The EntityProjection Fixtures library provides [TestBench test fixtures](http://test-bench.software/user-guide/fixtures.html) for testing objects that are implementations of Eventide's [EntityProjection](http://docs.eventide-project.org/user-guide/projection.html). The projection test abstractions simplify and generalize projection tests, reducing the test implementation effort and increasing test implementation clarity.
 
 ## Fixtures
 
