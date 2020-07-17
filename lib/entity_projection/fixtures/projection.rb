@@ -31,15 +31,13 @@ module EntityProjection
         end
       end
 
-      def assert_attributes_copied(attribute_names=nil, ignore_class: nil)
-        ignore_class ||= true
-
+      def assert_attributes_copied(attribute_names=nil)
         fixture(
           Schema::Fixtures::Equality,
           event,
           entity,
           attribute_names,
-          ignore_class: ignore_class
+          ignore_class: true
         )
       end
 
