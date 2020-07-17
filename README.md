@@ -12,7 +12,7 @@ A fixture is just a plain old Ruby object that includes the TestBench API. A fix
 
 ## Projection Fixture
 
-The `EntityProjection::Fixtures::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other.
+The `EntityProjection::Fixtures::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
 
 ``` ruby
 class SomeEntity
@@ -146,18 +146,44 @@ Instance of `EntityProjection::Fixtures::Projection`
 
 **Parameters**
 
-| Name | Description | Type | Default |
-| --- | --- | --- | --- |
-| projection | Projection class used to apply the event to the entity | EntityProjection | |
-| entity | Object to project state into  | (any) | |
-| event | Event to project state from | Messaging::Message | |
-| attribute_names | Optional list of attribute names to limit testing to | Array of Symbol or Hash | Attribute names of left-hand side object |
+| Name | Description | Type |
+| --- | --- | --- |
+| projection | Projection class used to apply the event to the entity | EntityProjection |
+| entity | Object to project state into  | (any) |
+| event | Event to project state from | Messaging::Message |
+| action | Supplemental proc evaluated in the context of the fixture. Used for invoking other assertions that are part of the fixture's API. | Proc |
 
 #### Actuating the Fixture
 
 ``` ruby
 call()
 ```
+
+#### Testing Attribute Values
+
+``` ruby
+assert_attributes_copied(attribute_names=[])
+```
+
+**Parameters**
+
+| Name | Description | Type | Default |
+| --- | --- | --- | --- |
+| attribute_names | Optional list of attribute names to limit testing to | Array of Symbol or Hash | Attribute names of left-hand side object |
+
+The `assert_attributes_copied` method is implemented using the `Schema::Fixtures::Equality` fixture from the [Schema Fixtures library](https://github.com/eventide-project/schema-fixtures).
+
+#### Testing Time Values
+
+``` ruby
+assert_time_converted_and_copied(time_attribute_name)
+```
+
+**Parameters**
+
+| Name | Description | Type |
+| --- | --- | --- |
+| time_attribute_name | Name of the time attribute (or attributes) converted and copied to test | Symbol or Hash |
 
 ## License
 
