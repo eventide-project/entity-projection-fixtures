@@ -123,11 +123,40 @@ SomeProjection
     Time converted and copied
       time
         Event Time: 2000-01-01T00:00:00.000Z
-        Entity Time: 2000-01-01 12:00:00.000 UTC
+        Entity Time: 2000-01-01 00:00:00.000 UTC
     Time converted and copied
       some_time => other_time
         Event Time: 2000-01-01T00:00:00.011Z
-        Entity Time: 2000-01-01 12:00:00.011 UTC
+        Entity Time: 2000-01-01 00:00:00.011 UTC
+```
+
+### Projection Fixture API
+
+Class: `EntityProjection::Fixtures::Projection`
+
+#### Construct the Projection Fixture
+
+``` ruby
+self.build(projection, entity, event, &action)
+```
+
+**Returns**
+
+Instance of `EntityProjection::Fixtures::Projection`
+
+**Parameters**
+
+| Name | Description | Type | Default |
+| --- | --- | --- | --- |
+| projection | Projection class used to apply the event to the entity | EntityProjection | |
+| entity | Object to project state into  | (any) | |
+| event | Event to project state from | Messaging::Message | |
+| attribute_names | Optional list of attribute names to limit testing to | Array of Symbol or Hash | Attribute names of left-hand side object |
+
+#### Actuating the Fixture
+
+``` ruby
+call()
 ```
 
 ## License
