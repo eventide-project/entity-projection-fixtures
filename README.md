@@ -136,7 +136,7 @@ Class: `EntityProjection::Fixtures::Projection`
 
 #### Construct the Projection Fixture
 
-The projection fixture is only ever constructed directly when [testing fixtures](http://test-bench.software/user-guide/fixtures.html#testing-fixtures). Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+The projection fixture is only ever constructed directly when [testing](http://test-bench.software/user-guide/fixtures.html#testing-fixtures) the fixture. Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
 
 ``` ruby
 self.build(projection, entity, event, &action)
@@ -157,7 +157,7 @@ Instance of `EntityProjection::Fixtures::Projection`
 
 #### Actuating the Fixture
 
-The projection fixture is only ever actuated directly when [testing fixtures](http://test-bench.software/user-guide/fixtures.html#testing-fixtures). Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+The projection fixture is only ever actuated directly when [testing](http://test-bench.software/user-guide/fixtures.html#testing-fixtures) the fixture. Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
 
 ``` ruby
 call()
