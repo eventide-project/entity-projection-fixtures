@@ -12,8 +12,8 @@ context "Projection" do
       :amount
     ])
 
-    fixture.assert_time_converted_and_copied(:time)
-    fixture.assert_time_converted_and_copied(:some_time => :other_time)
+    fixture.assert_transformed_and_copied(:time) { |v| Time.parse(v) }
+    fixture.assert_transformed_and_copied(:some_time => :other_time) { |v| Time.parse(v) }
   end
 
   fixture.()
@@ -30,10 +30,10 @@ context "Projection" do
     end
   end
 
-  context 'Time Converted and Copied' do
+  context 'Transformed and Copied' do
     ['time', 'some_time => other_time'].each do |attribute_name|
       context attribute_name do
-        passed = fixture.test_session.test_passed?('Time converted and copied', attribute_name)
+        passed = fixture.test_session.test_passed?('Transformed and copied', attribute_name)
 
         test "Passed" do
           assert(passed)
@@ -42,16 +42,3 @@ context "Projection" do
     end
   end
 end
-
-__END__
-
-Fixture
-  Apply Example to Example
-    Schema Equality: Example, Example
-      Attributes
-        example_id => id
-        amount
-    Time converted and copied
-      time
-    Time converted and copied
-      some_time => other_time

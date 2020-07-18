@@ -12,18 +12,3 @@ require 'pp'
 require 'test_bench'; TestBench.activate
 
 include EntityProjection::Fixtures
-
-def prn(object, description=nil)
-  *, namespace, name = object.class.name.split('::')
-
-  if description.nil?
-    output = "#{namespace}::#{name}"
-  else
-    output = "(#{description}) #{namespace}::#{name}"
-  end
-
-  puts
-  puts output
-  puts '- - -'
-  pp object
-end
