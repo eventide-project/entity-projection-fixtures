@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name = 'evt-entity_projection-fixture'
-  s.summary = "TestBench fixture for the EntityProjection library"
+  s.summary = "TestBench fixture for EntityProjection implementations"
   s.version = '0.0.0.0'
   s.description = ' '
 
