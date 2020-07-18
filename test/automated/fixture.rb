@@ -1,6 +1,6 @@
 require_relative 'automated_init'
 
-context "Projection" do
+context "Fixture" do
   fixture = EntityProjection::Fixture.build(
     EntityProjection::Fixture::Controls::Projection::Example,
     EntityProjection::Fixture::Controls::Entity.example,
