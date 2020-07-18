@@ -38,7 +38,7 @@ module EntityProjection
           entity,
           attribute_names,
           ignore_class: true,
-          print_title: false,
+          print_title_context: false,
           attributes_context_name: 'Copied'
         )
       end

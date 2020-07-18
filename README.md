@@ -84,7 +84,7 @@ The test script and the fixture work together as if they are the same test.
 ```
 SomeProjection
   Apply SomeEvent to SomeEntity
-    Attributes
+    Copied
       example_id => id
       amount
     Transformed and copied
