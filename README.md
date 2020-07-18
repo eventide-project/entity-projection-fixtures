@@ -93,7 +93,7 @@ SomeProjection
       some_time => other_time
 ```
 
-The output from the "SomeProjection" line-downward is from the Equality fixture.
+The output from the "SomeProjection" line-downward is from the projection fixture.
 
 ### Detailed Output
 
