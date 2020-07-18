@@ -10,5 +10,3 @@ require 'entity_projection/fixture/controls'
 require 'pp'
 
 require 'test_bench'; TestBench.activate
-
-include EntityProjection::Fixture
