@@ -67,8 +67,8 @@ context "SomeProjection" do
       :amount
     ])
 
-    fixture.assert_time_converted_and_copied(:time)
-    fixture.assert_time_converted_and_copied(:some_time => :other_time)
+    fixture.assert_transformed_and_copied(:time) { |v| Time.parse(v) }
+    fixture.assert_transformed_and_copied(:some_time => :other_time) { |v| Time.parse(v) }
   end
 end
 ```
@@ -136,6 +136,8 @@ Class: `EntityProjection::Fixtures::Projection`
 
 #### Construct the Projection Fixture
 
+The projection fixture is only ever constructed directly when [testing fixtures](http://test-bench.software/user-guide/fixtures.html#testing-fixtures). Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+
 ``` ruby
 self.build(projection, entity, event, &action)
 ```
@@ -155,11 +157,15 @@ Instance of `EntityProjection::Fixtures::Projection`
 
 #### Actuating the Fixture
 
+The projection fixture is only ever actuated directly when [testing fixtures](http://test-bench.software/user-guide/fixtures.html#testing-fixtures). Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+
 ``` ruby
 call()
 ```
 
 #### Testing Attribute Values
+
+The `assert_attributes_copied` method tests that attribute values are copied from the event being applied to the entity receiving the attribute data. By default, all attributes from the event are compared to entity attributes of the same name. An optional list of attribute names can be passed. WHen the list of attribute names is passed, only those attributes will be compared. The list of attribute names can also contain maps of attribute names for comparing values when the entity attribute name is not the same as the event attribute name.
 
 ``` ruby
 assert_attributes_copied(attribute_names=[])
