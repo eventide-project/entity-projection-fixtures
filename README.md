@@ -84,10 +84,9 @@ The test script and the fixture work together as if they are the same test.
 ```
 SomeProjection
   Apply SomeEvent to SomeEntity
-    Schema Equality: SomeEntity, SomeEvent
-      Attributes
-        example_id => id
-        amount
+    Attributes
+      example_id => id
+      amount
     Transformed and copied
       time
     Transformed and copied
@@ -110,16 +109,13 @@ SomeProjection
   Apply SomeEvent to SomeEntity
     Event Class: SomeEvent
     Entity Class: SomeEntity
-    Schema Equality: SomeEntity, SomeEvent
-      Control Class: SomeEntity
-      Compare Class: SomeEvent
-      Attributes
-        example_id => id
-          Control Value: "00000001-0000-4000-8000-000000000000"
-          Compare Value: "00000001-0000-4000-8000-000000000000"
-        amount
-          Control Value: 11
-          Compare Value: 11
+    Attributes
+      example_id => id
+        Control Value: "00000001-0000-4000-8000-000000000000"
+        Compare Value: "00000001-0000-4000-8000-000000000000"
+      amount
+        Control Value: 11
+        Compare Value: 11
     Transformed and copied
       time
         Event Value (String): "2000-01-01T00:00:00.000Z"
