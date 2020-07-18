@@ -33,7 +33,7 @@ context "Projection" do
     end
 
     test "Other Time" do
-      refute(entity.other_time == control_entity.other_time)
+      refute(entity.updated_time == control_entity.updated_time)
     end
   end
 
@@ -51,7 +51,7 @@ context "Projection" do
     end
 
     test "Some Time => Other Time" do
-      assert(entity.other_time == Time.parse(event.some_time))
+      assert(entity.updated_time == Time.parse(event.processed_time))
     end
   end
 end
