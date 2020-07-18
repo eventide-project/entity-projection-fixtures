@@ -37,7 +37,8 @@ module EntityProjection
           event,
           entity,
           attribute_names,
-          ignore_class: true
+          ignore_class: true,
+          print_title: false
         )
       end
 
