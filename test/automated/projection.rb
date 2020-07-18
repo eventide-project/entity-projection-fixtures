@@ -33,7 +33,7 @@ context "Projection" do
   context 'Transformed and Copied' do
     ['time', 'some_time => other_time'].each do |attribute_name|
       context attribute_name do
-        passed = fixture.test_session.test_passed?('Transformed and copied', attribute_name)
+        passed = fixture.test_session.test_passed?('Transformed and Copied', attribute_name)
 
         test "Passed" do
           assert(passed)

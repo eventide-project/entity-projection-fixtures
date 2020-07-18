@@ -38,7 +38,8 @@ module EntityProjection
           entity,
           attribute_names,
           ignore_class: true,
-          print_title: false
+          print_title: false,
+          attributes_context_name: 'Copied'
         )
       end
 
@@ -54,7 +55,7 @@ module EntityProjection
         event_attribute_value = event.public_send(event_attribute_name)
         entity_attribute_value = entity.public_send(entity_attribute_name)
 
-        context "Transformed and copied" do
+        context "Transformed and Copied" do
           detail "Event Value (#{event_attribute_value.class.name}): #{event_attribute_value.inspect}"
           detail "Entity Value (#{entity_attribute_value.class.name}): #{entity_attribute_value.inspect}"
 
