@@ -1,10 +1,10 @@
-# EntityProjection Fixtures
+# EntityProjection Fixture
 
 [TestBench](http://test-bench.software/) fixture for the [EntityProjection](https://github.com/eventide-project/entity-projection) library
 
-The EntityProjection Fixtures library provides a [TestBench test fixture](http://test-bench.software/user-guide/fixtures.html) for testing objects that are implementations of Eventide's [EntityProjection](http://docs.eventide-project.org/user-guide/projection.html). The projection test abstraction simplifies and generalizes projection tests, reducing the test implementation effort and increasing test implementation clarity.
+The EntityProjection Fixture library provides a [TestBench test fixture](http://test-bench.software/user-guide/fixtures.html) for testing objects that are implementations of Eventide's [EntityProjection](http://docs.eventide-project.org/user-guide/projection.html). The projection test abstraction simplifies and generalizes projection tests, reducing the test implementation effort and increasing test implementation clarity.
 
-## Fixtures
+## Fixture
 
 A fixture is a pre-defined, reusable test abstraction. The objects under test are specified at runtime so that the same standardized test implementation can be used against multiple objects.
 
@@ -12,7 +12,7 @@ A fixture is just a plain old Ruby object that includes the TestBench API. A fix
 
 ## Projection Fixture
 
-The `EntityProjection::Fixtures::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
+The `EntityProjection::Fixture::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
 
 ``` ruby
 class SomeEntity
@@ -56,7 +56,7 @@ context "SomeProjection" do
   some_entity = SomeEntity.new
 
   fixture(
-    EntityProjection::Fixtures::Projection,
+    EntityProjection::Fixture::Projection,
     SomeProjection,
     some_entity,
     some_entity
@@ -128,7 +128,7 @@ SomeProjection
 
 ### Projection Fixture API
 
-Class: `EntityProjection::Fixtures::Projection`
+Class: `EntityProjection::Fixture::Projection`
 
 #### Construct the Projection Fixture
 
@@ -140,7 +140,7 @@ self.build(projection, entity, event, &action)
 
 **Returns**
 
-Instance of `EntityProjection::Fixtures::Projection`
+Instance of `EntityProjection::Fixture::Projection`
 
 **Parameters**
 
@@ -173,7 +173,7 @@ assert_attributes_copied(attribute_names=[])
 | --- | --- | --- | --- |
 | attribute_names | Optional list of attribute names to limit testing to | Array of Symbol or Hash | Attribute names of left-hand side object |
 
-The `assert_attributes_copied` method is implemented using the `Schema::Fixtures::Equality` fixture from the [Schema Fixtures library](https://github.com/eventide-project/schema-fixtures).
+The `assert_attributes_copied` method is implemented using the `Schema::Fixture::Equality` fixture from the [Schema Fixture library](https://github.com/eventide-project/schema-fixtures).
 
 #### Testing Individual Attribute Transformations
 

@@ -1,5 +1,5 @@
 module EntityProjection
-  module Fixtures
+  module Fixture
     module Controls
       ID = MessageStore::Controls::ID
     end

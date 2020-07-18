@@ -1,5 +1,5 @@
 module EntityProjection
-  module Fixtures
+  module Fixture
     class Projection
       include TestBench::Fixture
       include Initializer

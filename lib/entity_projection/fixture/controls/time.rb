@@ -1,5 +1,5 @@
 module EntityProjection
-  module Fixtures
+  module Fixture
     module Controls
       Time = MessageStore::Controls::Time
     end
