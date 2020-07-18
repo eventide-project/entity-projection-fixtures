@@ -88,9 +88,9 @@ SomeProjection
       Attributes
         example_id => id
         amount
-    Time converted and copied
+    Transformed and copied
       time
-    Time converted and copied
+    Transformed and copied
       some_time => other_time
 ```
 
@@ -120,14 +120,14 @@ SomeProjection
         amount
           Control Value: 11
           Compare Value: 11
-    Time converted and copied
+    Transformed and copied
       time
-        Event Time: 2000-01-01T00:00:00.000Z
-        Entity Time: 2000-01-01 00:00:00.000 UTC
-    Time converted and copied
+        Event Value (String): "2000-01-01T00:00:00.000Z"
+        Entity Value (Time): 2000-01-01 00:00:00 UTC
+    Transformed and copied
       some_time => other_time
-        Event Time: 2000-01-01T00:00:00.011Z
-        Entity Time: 2000-01-01 00:00:00.011 UTC
+        Event Value (String): "2000-01-01T00:00:00.011Z"
+        Entity Value (Time): 2000-01-01 00:00:00.011 UTC
 ```
 
 ### Projection Fixture API
@@ -179,7 +179,9 @@ assert_attributes_copied(attribute_names=[])
 
 The `assert_attributes_copied` method is implemented using the `Schema::Fixtures::Equality` fixture from the [Schema Fixtures library](https://github.com/eventide-project/schema-fixtures).
 
-#### Testing Time Values
+#### Testing Individual Attribute Transformations
+
+Projects may not just copy attributes from an event to an entity verbatim. A projection might transform or convert the event data that it's assigning to an entity. The `assert_transformed_and_copied` method allows an event attribute to be transformed before being compared to an entity attribute.
 
 ``` ruby
 assert_time_converted_and_copied(time_attribute_name)
@@ -189,7 +191,7 @@ assert_time_converted_and_copied(time_attribute_name)
 
 | Name | Description | Type |
 | --- | --- | --- |
-| time_attribute_name | Name of the time attribute (or attributes) converted and copied to test | Symbol or Hash |
+| attribute_name | Name of the event attribute, or map of event attribute name to entity attribute name, to be compared | Symbol or Hash |
 
 ## License
 

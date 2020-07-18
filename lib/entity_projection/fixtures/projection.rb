@@ -54,8 +54,8 @@ module EntityProjection
         entity_attribute_value = entity.public_send(entity_attribute_name)
 
         context "Transformed and copied" do
-          detail "Event Value: #{event_attribute_value.inspect}"
-          detail "Entity Value: #{entity_attribute_value.inspect}"
+          detail "Event Value (#{event_attribute_value.class.name}): #{event_attribute_value.inspect}"
+          detail "Entity Value (#{entity_attribute_value.class.name}): #{entity_attribute_value.inspect}"
 
           printed_attribute_name = self.class.printed_attribute_name(event_attribute_name, entity_attribute_name)
 
