@@ -1,10 +1,10 @@
 require_relative 'automated_init'
 
 context "Projection" do
-  fixture = Projection.build(
-    Controls::Projection::Example,
-    Controls::Entity.example,
-    Controls::Event.example
+  fixture = EntityProjection::Fixture.build(
+    EntityProjection::Fixture::Controls::Projection::Example,
+    EntityProjection::Fixture::Controls::Entity.example,
+    EntityProjection::Fixture::Controls::Event.example
   ) do |fixture|
 
     fixture.assert_attributes_copied([
