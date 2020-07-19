@@ -2,17 +2,6 @@ module EntityProjection
   class Fixture
     module Controls
       module Entity
-        def self.example
-          some_entity = Example.build
-
-          some_entity.id = id
-          some_entity.amount = amount
-          some_entity.time = Time::Effective::Raw.example
-          some_entity.updated_time = Time::Processed::Raw.example
-
-          some_entity
-        end
-
         def self.id
           ID.example(increment: id_increment)
         end

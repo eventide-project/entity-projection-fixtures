@@ -4,7 +4,7 @@ context "Fixture" do
   fixture(
     EntityProjection::Fixture,
     EntityProjection::Fixture::Controls::Projection::Example,
-    EntityProjection::Fixture::Controls::Entity.example,
+    EntityProjection::Fixture::Controls::Entity::New.example,
     EntityProjection::Fixture::Controls::Event.example
   ) do |fixture|
 
