@@ -54,12 +54,12 @@ context "SomeProjection" do
   some_event.some_time = Time.utc(2000) + 1
 
   some_entity = SomeEntity.new
+  some_projection = SomeProjection.build(entity)
 
   fixture(
     EntityProjection::Fixture::Projection,
-    SomeProjection,
-    some_entity,
-    some_entity
+    some_projection,
+    some_event
   ) do |fixture|
 
     fixture.assert_attributes_copied([
@@ -135,7 +135,7 @@ Class: `EntityProjection::Fixture::Projection`
 The projection fixture is only ever constructed directly when [testing](http://test-bench.software/user-guide/fixtures.html#testing-fixtures) the fixture. Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
 
 ``` ruby
-self.build(projection, entity, event, &action)
+self.build(projection, event, &action)
 ```
 
 **Returns**
@@ -146,7 +146,7 @@ Instance of `EntityProjection::Fixture::Projection`
 
 | Name | Description | Type |
 | --- | --- | --- |
-| projection | Projection class used to apply the event to the entity | EntityProjection |
+| projection | Projection used to apply the event to the entity | EntityProjection |
 | entity | Object to project state into  | (any) |
 | event | Event to project state from | Messaging::Message |
 | action | Supplemental proc evaluated in the context of the fixture. Used for invoking other assertions that are part of the fixture's API. | Proc |
