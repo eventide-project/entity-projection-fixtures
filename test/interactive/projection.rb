@@ -6,12 +6,13 @@ context "Projection" do
 
   event = EntityProjection::Fixture::Controls::Event.example
 
+  projection = EntityProjection::Fixture::Controls::Projection::Example.build(entity)
+
   detail "Event: #{event.pretty_inspect}"
   detail "Control Entity: #{control_entity.pretty_inspect}"
 
   fixture = EntityProjection::Fixture.build(
-    EntityProjection::Fixture::Controls::Projection::Example,
-    entity,
+    projection,
     event
   )
 

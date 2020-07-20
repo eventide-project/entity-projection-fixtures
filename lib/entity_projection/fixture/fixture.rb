@@ -5,24 +5,26 @@ module EntityProjection
 
     initializer :projection, :control_entity, :entity, :event, :action
 
-    def self.build(projection, entity, event, &action)
+    def self.build(projection, event, &action)
+      entity = projection.entity
       control_entity = entity.dup
+
       new(projection, control_entity, entity, event, action)
     end
 
     def call
-      projection_type = projection.name.split('::').last
+      projection_type = projection.class.name.split('::').last
       entity_type = entity.class.name.split('::').last
       event_type = event.message_type
 
-      detail "Projection Class: #{projection.name}"
+      detail "Projection Class: #{projection.class.name}"
 
       context "Apply #{event.message_type} to #{entity.class.type}" do
 
         detail "Event Class: #{event.class.name}"
         detail "Entity Class: #{entity.class.name}"
 
-        projection.(entity, event)
+        projection.(event)
 
         if not action.nil?
           action.call(self)
