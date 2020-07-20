@@ -7,7 +7,7 @@ module EntityProjection
 
     def self.build(projection, event, &action)
       entity = projection.entity
-      control_entity = entity.dup
+      control_entity = entity.clone
 
       new(projection, control_entity, entity, event, action)
     end
