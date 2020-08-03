@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.name = 'evt-entity_projection-fixture'
   s.summary = "TestBench fixture for EntityProjection implementations"
-  s.version = '0.0.0.1'
+  s.version = '0.0.0.2'
   s.description = ' '
 
   s.authors = ['The Eventide Project']
