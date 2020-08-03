@@ -1,4 +1,4 @@
-# EntityProjection Fixture
+# EntityProjection Fixtures
 
 [TestBench](http://test-bench.software/) fixture for [EntityProjection](https://github.com/eventide-project/entity-projection) implementations
 
@@ -12,7 +12,7 @@ A fixture is just a plain old Ruby object that includes the TestBench API. A fix
 
 ## Projection Fixture
 
-The `EntityProjection::Fixture::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
+The `EntityProjection::Fixtures::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
 
 ``` ruby
 class SomeEntity
@@ -57,7 +57,7 @@ context "SomeProjection" do
   some_projection = SomeProjection.build(entity)
 
   fixture(
-    EntityProjection::Fixture::Projection,
+    EntityProjection::Fixtures::Projection,
     some_projection,
     some_event
   ) do |fixture|
@@ -111,24 +111,24 @@ SomeProjection
     Entity Class: SomeEntity
     Attributes
       example_id => id
-        Control Value: "00000001-0000-4000-8000-000000000000"
-        Compare Value: "00000001-0000-4000-8000-000000000000"
+        SomeEvent Value: "00000001-0000-4000-8000-000000000000"
+        SomeEntity Value: "00000001-0000-4000-8000-000000000000"
       amount
-        Control Value: 11
-        Compare Value: 11
+        SomeEvent Value: 11
+        SomeEntity Value: 11
     Transformed and copied
       time
-        Event Value (String): "2000-01-01T00:00:00.000Z"
-        Entity Value (Time): 2000-01-01 00:00:00 UTC
+        SomeEvent Value (String): "2000-01-01T00:00:00.000Z"
+        SomeEntity Value (Time): 2000-01-01 00:00:00 UTC
     Transformed and copied
       some_time => other_time
-        Event Value (String): "2000-01-01T00:00:00.011Z"
-        Entity Value (Time): 2000-01-01 00:00:00.011 UTC
+        SomeEvent Value (String): "2000-01-01T00:00:00.011Z"
+        SomeEntity Value (Time): 2000-01-01 00:00:00.011 UTC
 ```
 
 ### Projection Fixture API
 
-Class: `EntityProjection::Fixture::Projection`
+Class: `EntityProjection::Fixtures::Projection`
 
 #### Construct the Projection Fixture
 
@@ -140,7 +140,7 @@ self.build(projection, event, &action)
 
 **Returns**
 
-Instance of `EntityProjection::Fixture::Projection`
+Instance of `EntityProjection::Fixtures::Projection`
 
 **Parameters**
 

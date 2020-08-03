@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name = 'evt-entity_projection-fixture'
-  s.summary = "TestBench fixture for EntityProjection implementations"
-  s.version = '0.0.0.2'
+  s.name = 'evt-entity_projection-fixtures'
+  s.summary = "TestBench fixtures for EntityProjection implementations"
+  s.version = '0.0.0.0'
   s.description = ' '
 
   s.authors = ['The Eventide Project']
   s.email = 'opensource@eventide-project.org'
-  s.homepage = 'https://github.com/eventide-project/entity-projection-fixture'
+  s.homepage = 'https://github.com/eventide-project/entity-projection-fixtures'
   s.licenses = ['MIT']
 
   s.require_paths = ['lib']
