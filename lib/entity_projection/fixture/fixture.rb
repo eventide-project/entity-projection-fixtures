@@ -3,6 +3,14 @@ module EntityProjection
     include TestBench::Fixture
     include Initializer
 
+    def entity_class
+      entity.class
+    end
+
+    def event_class
+      event.class
+    end
+
     initializer :projection, :control_entity, :entity, :event, :action
 
     def self.build(projection, event, &action)
@@ -57,8 +65,8 @@ module EntityProjection
       entity_attribute_value = entity.public_send(entity_attribute_name)
 
       context "Transformed and Copied" do
-        detail "Event Value (#{event_attribute_value.class.name}): #{event_attribute_value.inspect}"
-        detail "Entity Value (#{entity_attribute_value.class.name}): #{entity_attribute_value.inspect}"
+        detail "#{event_class.name.split('::').last} Value (#{event_attribute_value.class.name}): #{event_attribute_value.inspect}"
+        detail "#{entity_class.name.split('::').last} Value (#{entity_attribute_value.class.name}): #{entity_attribute_value.inspect}"
 
         printed_attribute_name = self.class.printed_attribute_name(event_attribute_name, entity_attribute_name)
 
