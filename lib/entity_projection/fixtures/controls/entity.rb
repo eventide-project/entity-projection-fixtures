@@ -1,5 +1,5 @@
 module EntityProjection
-  class Fixture
+  module Fixtures
     module Controls
       module Entity
         def self.id

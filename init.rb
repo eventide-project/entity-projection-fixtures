@@ -1,3 +1,3 @@
 require_relative './load_path'
 
-require 'entity_projection/fixture'
+require 'entity_projection/fixtures'

@@ -1,5 +1,5 @@
 module EntityProjection
-  class Fixture
+  module Fixtures
     module Controls
       module Projection
         class Example

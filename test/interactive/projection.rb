@@ -1,12 +1,12 @@
 require_relative 'interactive_init'
 
 context "Projection" do
-  entity = EntityProjection::Fixture::Controls::Entity::New.example
-  projection = EntityProjection::Fixture::Controls::Projection::Example.build(entity)
-  event = EntityProjection::Fixture::Controls::Event.example
+  entity = Projection::Controls::Entity::New.example
+  projection = Projection::Controls::Projection::Example.build(entity)
+  event = Projection::Controls::Event.example
 
   fixture(
-    EntityProjection::Fixture,
+    Projection,
     projection,
     event
   ) do |fixture|
