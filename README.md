@@ -60,15 +60,15 @@ context "SomeProjection" do
     EntityProjection::Fixtures::Projection,
     some_projection,
     some_event
-  ) do |fixture|
+  ) do |projection|
 
-    fixture.assert_attributes_copied([
+    projection.assert_attributes_copied([
       { :example_id => :id },
       :amount
     ])
 
-    fixture.assert_transformed_and_copied(:time) { |v| Time.parse(v) }
-    fixture.assert_transformed_and_copied(:some_time => :other_time) { |v| Time.parse(v) }
+    projection.assert_transformed_and_copied(:time) { |v| Time.parse(v) }
+    projection.assert_transformed_and_copied(:some_time => :other_time) { |v| Time.parse(v) }
   end
 end
 ```
@@ -81,7 +81,7 @@ ruby test/projection.rb
 
 The test script and the fixture work together as if they are the same test.
 
-```
+``` text
 SomeProjection
   Apply SomeEvent to SomeEntity
     Copied
@@ -103,7 +103,7 @@ The fixture will print more detailed output if the `TEST_BENCH_DETAIL` environme
 TEST_BENCH_DETAIL=on ruby test/projection.rb
 ```
 
-```
+``` text
 SomeProjection
   Projection Class: SomeProjection
   Apply SomeEvent to SomeEntity
@@ -130,42 +130,47 @@ SomeProjection
 
 Class: `EntityProjection::Fixtures::Projection`
 
-#### Construct the Projection Fixture
+#### Actuating the Projection Fixture
 
-The projection fixture is only ever constructed directly when [testing](http://test-bench.software/user-guide/fixtures.html#testing-fixtures) the fixture. Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+The fixture is executed using TestBench's `fixture` method.
 
 ``` ruby
-self.build(projection, event, &action)
+fixture(EntityProjection::Fixtures::Projection, projection, event, &test_block)
 ```
 
-**Returns**
-
-Instance of `EntityProjection::Fixtures::Projection`
+The first argument sent to the `fixture` method is the `EntityProjection::Fixtures::Projection` class. Subsequent arguments are the specific construction parameters of the projection fixture.
 
 **Parameters**
 
 | Name | Description | Type |
 | --- | --- | --- |
-| projection | Projection used to apply the event to the entity | EntityProjection |
-| entity | Object to project state into  | (any) |
+| projection | Projection instance used to apply the event to the entity | EntityProjection |
+| entity | Object to project state into | (any) |
 | event | Event to project state from | Messaging::Message |
-| action | Supplemental proc evaluated in the context of the fixture. Used for invoking other assertions that are part of the fixture's API. | Proc |
+| test_block | block evaluated in the context of the fixture used for invoking other assertions that are part of the fixture's API | Proc |
 
-#### Actuating the Fixture
+**Block Parameter**
 
-The projection fixture is only ever actuated directly when [testing](http://test-bench.software/user-guide/fixtures.html#testing-fixtures) the fixture. Usually, when the fixture is used to fulfill its purpose of testing a projection, TestBench's `fixture` method is used.
+The `entity_projection_fixture` argument is passed to the `test_block` if the block is given.
 
-``` ruby
-call()
-```
+| Name | Description | Type |
+| --- | --- | --- |
+| entity_projection_fixture | Instance of the entity projection fixture that is being actuated, constructed with the supplemental arguments sent to the `fixture` method | EntityProjection::Fixtures::Projection |
 
-#### Testing Attribute Values
+**Methods**
 
-The `assert_attributes_copied` method tests that attribute values are copied from the event being applied to the entity receiving the attribute data. By default, all attributes from the event are compared to entity attributes of the same name. An optional list of attribute names can be passed. When the list of attribute names is passed, only those attributes will be compared. The list of attribute names can also contain maps of attribute names for comparing values when the entity attribute name is not the same as the event attribute name.
+The following methods are available from the `handler_fixture` block parameter, and on an instance of `Messaging::Fixtures::Handler`:
+
+- `assert_attributes_copied`
+- `assert_transformed_and_copied`
+
+#### Testing Attribute Values Copied to the Entity
 
 ``` ruby
 assert_attributes_copied(attribute_names=[])
 ```
+
+The `assert_attributes_copied` method tests that attribute values are copied from the event being applied to the entity receiving the attribute data. By default, all attributes from the event are compared to entity attributes of the same name. An optional list of attribute names can be passed. When the list of attribute names is passed, only those attributes will be compared. The list of attribute names can also contain maps of attribute names for comparing values when the entity attribute name is not the same as the event attribute name.
 
 **Parameters**
 
@@ -175,19 +180,25 @@ assert_attributes_copied(attribute_names=[])
 
 The `assert_attributes_copied` method is implemented using the `Schema::Fixture::Equality` fixture from the [Schema Fixture library](https://github.com/eventide-project/schema-fixtures).
 
-#### Testing Individual Attribute Transformations
-
-Projects may not just copy attributes from an event to an entity verbatim. A projection might transform or convert the event data that it's assigning to an entity. The `assert_transformed_and_copied` method allows an event attribute to be transformed before being compared to an entity attribute.
+#### Testing Individual Attribute Transformations Copied to the Entity
 
 ``` ruby
 assert_time_converted_and_copied(time_attribute_name)
 ```
+
+Projects may not just copy attributes from an event to an entity verbatim. A projection might transform or convert the event data that it's assigning to an entity. The `assert_transformed_and_copied` method allows an event attribute to be transformed before being compared to an entity attribute.
 
 **Parameters**
 
 | Name | Description | Type |
 | --- | --- | --- |
 | attribute_name | Name of the event attribute, or map of event attribute name to entity attribute name, to be compared | Symbol or Hash |
+
+## More Documentation
+
+More detailed documentation on the fixtures and their APIs can be found in the test fixtures user guide on the Eventide documentation site:
+
+[http://docs.eventide-project.org/user-guide/test-fixtures/](http://docs.eventide-project.org/user-guide/test-fixtures/)
 
 ## License
 
