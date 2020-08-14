@@ -12,13 +12,13 @@ module EntityProjection
         event.class
       end
 
-      initializer :projection, :control_entity, :entity, :event, :action
+      initializer :projection, :control_entity, :entity, :event, :test_block
 
-      def self.build(projection, event, &action)
+      def self.build(projection, event, &test_block)
         entity = projection.entity
         control_entity = entity.clone
 
-        new(projection, control_entity, entity, event, action)
+        new(projection, control_entity, entity, event, test_block)
       end
 
       def call
@@ -35,8 +35,8 @@ module EntityProjection
 
           projection.(event)
 
-          if not action.nil?
-            action.call(self)
+          if not test_block.nil?
+            test_block.call(self)
           end
         end
       end
