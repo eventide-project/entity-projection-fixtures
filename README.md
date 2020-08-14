@@ -202,4 +202,4 @@ More detailed documentation on the fixtures and their APIs can be found in the t
 
 ## License
 
-The `entity-projection-fixtures` library is released under the [MIT License](https://github.com/eventide-project/entity-projection-fixtures/blob/master/MIT-License.txt).
+The Entity Projection Fixtures library is released under the [MIT License](https://github.com/eventide-project/entity-projection-fixtures/blob/master/MIT-License.txt).
