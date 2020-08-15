@@ -1,7 +1,5 @@
 # EntityProjection Fixtures
 
-[TestBench](http://test-bench.software/) fixture for [EntityProjection](https://github.com/eventide-project/entity-projection) implementations
-
 The EntityProjection Fixtures library provides a [TestBench test fixture](http://test-bench.software/user-guide/fixtures.html) for testing objects that are implementations of Eventide's [EntityProjection](http://docs.eventide-project.org/user-guide/projection.html). The projection test abstraction simplifies and generalizes projection tests, reducing the test implementation effort and increasing test implementation clarity.
 
 ## Fixture
@@ -12,7 +10,7 @@ A fixture is just a plain old Ruby object that includes the TestBench API. A fix
 
 ## Projection Fixture
 
-The `EntityProjection::Fixtures::Projection` fixture tests the projection of an event onto an entity. It tests that the attributes of event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names, and a map can be provided to compare different attributes to each other. The projection fixture also allows the testing of time values copied from an event in serialized text format to an entity object's natural time values.
+The `EntityProjection::Fixtures::Projection` fixture tests the projection of events onto an entity. It tests that the attributes of an event are copied to the entity. The attributes tested can be limited to a subset of attributes by specifying a list of attribute names. A map can be provided to compare attributes that have a different name on the source event than on the entity. The projection fixture also allows the testing of values copied from an event that are transformed before being assigned to an entity's attributes. The copy-and-transform assertion can also accept a map to test the transformation between attributes that have a different name on the source event than on the entity.
 
 ``` ruby
 class SomeEntity
@@ -73,13 +71,19 @@ context "SomeProjection" do
 end
 ```
 
-Running the test is no different than [running any TestBench test](http://test-bench.software/user-guide/running-tests.html). In its simplest form, running the test is done by passing the test file name to the `ruby` executable.
+## Running the Fixture
+
+Running the test is no different than [running any TestBench test](http://test-bench.software/user-guide/running-tests.html).
+
+For example, given a test file named `projection.rb` that uses the projection fixture, in a directory named `test`, the test is executed by passing the file name to the `ruby` executable.
 
 ``` bash
 ruby test/projection.rb
 ```
 
-The test script and the fixture work together as if they are the same test.
+The test script and the fixture work together as if they are part of the same test context, preserving output nesting between the test script file and the test fixture.
+
+## Projection Fixture Output
 
 ``` text
 SomeProjection
@@ -95,9 +99,11 @@ SomeProjection
 
 The output below the "SomeProjection" line is from the projection fixture.
 
-### Detailed Output
+## Detailed Output
 
-The fixture will print more detailed output if the `TEST_BENCH_DETAIL` environment variable is set to `on`.
+In the event of any error or failed assertion, the test output will include additional detailed output that can be useful in understanding the context of the failure and the state of the fixture itself and the objects that it's testing.
+
+The detailed output can also be printed by setting the `TEST_BENCH_DETAIL` environment variable to `on`.
 
 ``` bash
 TEST_BENCH_DETAIL=on ruby test/projection.rb
@@ -126,11 +132,7 @@ SomeProjection
         SomeEntity Value (Time): 2000-01-01 00:00:00.011 UTC
 ```
 
-### Projection Fixture API
-
-Class: `EntityProjection::Fixtures::Projection`
-
-#### Actuating the Projection Fixture
+## Actuating the Projection Fixture
 
 The fixture is executed using TestBench's `fixture` method.
 
@@ -138,7 +140,7 @@ The fixture is executed using TestBench's `fixture` method.
 fixture(EntityProjection::Fixtures::Projection, projection, event, &test_block)
 ```
 
-The first argument sent to the `fixture` method is the `EntityProjection::Fixtures::Projection` class. Subsequent arguments are the specific construction parameters of the projection fixture.
+The first argument sent to the `fixture` method is always the `EntityProjection::Fixtures::Projection` class. Subsequent arguments are the specific construction parameters of the projection fixture.
 
 **Parameters**
 
@@ -147,52 +149,68 @@ The first argument sent to the `fixture` method is the `EntityProjection::Fixtur
 | projection | Projection instance used to apply the event to the entity | EntityProjection |
 | entity | Object to project state into | (any) |
 | event | Event to project state from | Messaging::Message |
-| test_block | block evaluated in the context of the fixture used for invoking other assertions that are part of the fixture's API | Proc |
+| test_block | Block evaluated in the context of the fixture used for invoking other assertions that are part of the fixture's API | Proc |
 
 **Block Parameter**
 
-The `entity_projection_fixture` argument is passed to the `test_block` if the block is given.
+The `projection_fixture` argument is passed to the `test_block` if the block is given.
 
 | Name | Description | Type |
 | --- | --- | --- |
-| entity_projection_fixture | Instance of the entity projection fixture that is being actuated, constructed with the supplemental arguments sent to the `fixture` method | EntityProjection::Fixtures::Projection |
+| projection_fixture | Instance of the projection fixture that is being actuated | EntityProjection::Fixtures::Projection |
 
-**Methods**
+**Block Parameter Methods**
 
-The following methods are available from the `handler_fixture` block parameter, and on an instance of `Messaging::Fixtures::Handler`:
+The following methods are available from the `projection_fixture` block parameter, and on an instance of `EntityProjection::Fixtures::Projection`:
 
 - `assert_attributes_copied`
 - `assert_transformed_and_copied`
 
-#### Testing Attribute Values Copied to the Entity
+## Testing Attribute Values Copied to the Entity
 
 ``` ruby
 assert_attributes_copied(attribute_names=[])
 ```
 
-The `assert_attributes_copied` method tests that attribute values are copied from the event being applied to the entity receiving the attribute data. By default, all attributes from the event are compared to entity attributes of the same name. An optional list of attribute names can be passed. When the list of attribute names is passed, only those attributes will be compared. The list of attribute names can also contain maps of attribute names for comparing values when the entity attribute name is not the same as the event attribute name.
+The `assert_attributes_copied` method tests that attribute values are copied from the event being applied to the entity receiving the attribute data. By default, all attributes from the event are compared to entity attributes of the same name.
 
-**Parameters**
+An optional list of attribute names can be passed. When the list of attribute names is passed, only those attributes will be compared. The list of attribute names can also contain maps of attribute names for comparing values when the entity attribute name is not the same as the event attribute name.
 
-| Name | Description | Type | Default |
-| --- | --- | --- | --- |
-| attribute_names | Optional list of attribute names to limit testing to | Array of Symbol or Hash | Attribute names of left-hand side object |
-
-The `assert_attributes_copied` method is implemented using the `Schema::Fixture::Equality` fixture from the [Schema Fixture library](https://github.com/eventide-project/schema-fixtures).
-
-#### Testing Individual Attribute Transformations Copied to the Entity
+**Example**
 
 ``` ruby
-assert_time_converted_and_copied(time_attribute_name)
+projection.assert_attributes_copied([
+  { :example_id => :id },
+  :amount
+])
 ```
-
-Projects may not just copy attributes from an event to an entity verbatim. A projection might transform or convert the event data that it's assigning to an entity. The `assert_transformed_and_copied` method allows an event attribute to be transformed before being compared to an entity attribute.
 
 **Parameters**
 
 | Name | Description | Type |
 | --- | --- | --- |
-| attribute_name | Name of the event attribute, or map of event attribute name to entity attribute name, to be compared | Symbol or Hash |
+| attribute_names | Optional list of attribute names to compare, or maps of event attribute name to entity attribute name | Array of Symbol or Hash |
+
+## Testing Individual Attribute Transformations Copied to the Entity
+
+``` ruby
+assert_transformed_and_copied(attribute_name, &transform)
+```
+
+A projection may transform or convert the event data that it's assigning to an entity. The `assert_transformed_and_copied` method allows an event attribute to be transformed before being compared to an entity attribute. The assertion can also accept a map to test the transformation between attributes that have a different name on the source event than on the entity.
+
+**Example**
+
+``` ruby
+projection.assert_transformed_and_copied(:time) { |v| Time.parse(v) }
+projection.assert_transformed_and_copied(:some_time => :other_time) { |v| Time.parse(v) }
+```
+
+**Parameters**
+
+| Name | Description | Type |
+| --- | --- | --- |
+| attribute_name | Name of the event attribute to compare, or map of event attribute name to entity attribute name | Symbol or Hash |
 
 ## More Documentation
 
