@@ -18,7 +18,7 @@ module EntityProjection
           include Schema::DataStructure
 
           attribute :id, String
-          attribute :amount, Numeric, default: 0
+          attribute :amount, Numeric, default: proc { 0 }
           attribute :time, ::Time
           attribute :updated_time, ::Time
         end

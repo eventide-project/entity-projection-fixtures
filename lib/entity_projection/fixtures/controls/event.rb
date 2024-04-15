@@ -25,7 +25,7 @@ module EntityProjection
           include Messaging::Message
 
           attribute :example_id, String
-          attribute :amount, Numeric, default: 0
+          attribute :amount, Numeric, default: proc { 0 }
           attribute :time, String
           attribute :processed_time, String
         end

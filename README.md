@@ -17,7 +17,7 @@ class SomeEntity
   include Schema::DataStructure
 
   attribute :id, String
-  attribute :amount, Numeric, default: 0
+  attribute :amount, Numeric, default: proc { 0 }
   attribute :time, ::Time
   attribute :other_time, ::Time
 end
@@ -26,7 +26,7 @@ class SomeEvent
   include Messaging::Message
 
   attribute :example_id, String
-  attribute :amount, Numeric, default: 0
+  attribute :amount, Numeric, default: proc { 0 }
   attribute :time, String
   attribute :some_time, String
 end
